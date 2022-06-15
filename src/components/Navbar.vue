@@ -74,16 +74,16 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <router-link to="/cart">
-          <v-btn text>
-            <v-icon class="mr-2">mdi-github</v-icon>
-          </v-btn>
-        </router-link>
+        <!-- <router-link to="/cart"> -->
+        <v-btn text>
+          <v-icon class="mr-2">mdi-github</v-icon>
+        </v-btn>
+        <!-- </router-link> -->
       </v-toolbar-items>
     </v-app-bar>
 
     <!-- size mobile -->
-    <v-app-bar class="hidden-sm-and-up" color="white" fixed>
+    <v-app-bar class="hidden-lg-and-up" color="white" fixed>
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
       <v-spacer></v-spacer>
       <span class="mt-2 mr-3">
@@ -104,7 +104,12 @@
       </router-link>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+      right="$vuetify.rtl"
+    >
       <v-system-bar></v-system-bar>
       <v-list>
         <v-list-item>
@@ -222,22 +227,25 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       drawer: false,
       group: null,
+      message: "",
     };
   },
   methods: {
     async sendMessage() {
-      this.showSearch = true;
+      // this.showSearch = true;
       await axios
         .get(
-          `https://fakerestapi.azurewebsites.net/api/v1/Activities/${this.message}`
+          `http://api.codebazan.ir/music/?type=search&query=${this.message}&page=1`
         )
         .then((res) => {
-          this.resultSearch = res;
+          console.log(res);
         });
     },
   },
